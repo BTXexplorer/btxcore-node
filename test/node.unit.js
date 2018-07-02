@@ -2,15 +2,15 @@
 
 var should = require('chai').should();
 var sinon = require('sinon');
-var ravencore = require('ravencore-lib');
-var Networks = ravencore.Networks;
+var btxcore = require('btxcore-lib');
+var Networks = btxcore.Networks;
 var proxyquire = require('proxyquire');
 var util = require('util');
 var BaseService = require('../lib/service');
 var index = require('../lib');
 var log = index.log;
 
-describe('Ravencore Node', function() {
+describe('btxcore Node', function() {
 
   var baseConfig = {};
 
@@ -425,7 +425,7 @@ describe('Ravencore Node', function() {
 
   describe('#getNetworkName', function() {
     afterEach(function() {
-      ravencore.Networks.disableRegtest();
+      btxcore.Networks.disableRegtest();
     });
     it('it will return the network name for livenet', function() {
       var node = new Node(baseConfig);

@@ -10,22 +10,22 @@ nvm install v4
 
 ## Fork and Download Repositories
 
-To develop ravencore-node:
+To develop btxcore-node:
 
 ```bash
 cd ~
-git clone git@github.com:<yourusername>/ravencore-node.git
-git clone git@github.com:<yourusername>/ravencore-lib.git
+git clone git@github.com:<yourusername>/btxcore-node.git
+git clone git@github.com:<yourusername>/btxcore-lib.git
 ```
 
-To develop ravencoin or to compile from source:
+To develop bitcore or to compile from source:
 
 ```bash
-git clone git@github.com:<yourusername>/ravencoin.git
+git clone git@github.com:<yourusername>/bitcore.git
 git fetch origin <branchname>:<branchname>
 git checkout <branchname>
 ```
-**Note**: See ravencoin documentation for building ravencoin on your platform.
+**Note**: See bitcore documentation for building bitcore on your platform.
 
 
 ## Install Development Dependencies
@@ -46,27 +46,27 @@ brew install zeromq
 ## Install and Symlink
 
 ```bash
-cd ravencore-lib
+cd btxcore-lib
 npm install
-cd ../ravencore-node
+cd ../btxcore-node
 npm install
 ```
-**Note**: If you get a message about not being able to download ravencoin distribution, you'll need to compile ravend from source, and setup your configuration to use that version.
+**Note**: If you get a message about not being able to download bitcore distribution, you'll need to compile bitcored from source, and setup your configuration to use that version.
 
 
-We now will setup symlinks in `ravencore-node` *(repeat this for any other modules you're planning on developing)*:
+We now will setup symlinks in `btxcore-node` *(repeat this for any other modules you're planning on developing)*:
 ```bash
 cd node_modules
-rm -rf ravencore-lib
-ln -s ~/ravencore-lib
-rm -rf ravend-rpc
-ln -s ~/ravend-rpc
+rm -rf btxcore-lib
+ln -s ~/btxcore-lib
+rm -rf bitcored-rpc
+ln -s ~/bitcored-rpc
 ```
 
-And if you're compiling or developing ravencoin:
+And if you're compiling or developing bitcore:
 ```bash
 cd ../bin
-ln -sf ~/ravencoin/src/ravend
+ln -sf ~/bitcore/src/bitcored
 ```
 
 ## Run Tests
@@ -78,19 +78,19 @@ npm install mocha -g
 
 To run all test suites:
 ```bash
-cd ravencore-node
+cd btxcore-node
 npm run regtest
 npm run test
 ```
 
 To run a specific unit test in watch mode:
 ```bash
-mocha -w -R spec test/services/ravend.unit.js
+mocha -w -R spec test/services/bitcored.unit.js
 ```
 
 To run a specific regtest:
 ```bash
-mocha -R spec regtest/ravend.js
+mocha -R spec regtest/bitcored.js
 ```
 
 ## Running a Development Node
@@ -102,46 +102,46 @@ cd ~
 mkdir devnode
 cd devnode
 mkdir node_modules
-touch ravencore-node.json
+touch btxcore-node.json
 touch package.json
 ```
 
-Edit `ravencore-node.json` with something similar to:
+Edit `btxcore-node.json` with something similar to:
 ```json
 {
   "network": "livenet",
   "port": 3001,
   "services": [
-    "ravend",
+    "bitcored",
     "web",
     "insight-api",
     "insight-ui",
     "<additional_service>"
   ],
   "servicesConfig": {
-    "ravend": {
+    "bitcored": {
       "spawn": {
-        "datadir": "/home/<youruser>/.ravend",
-        "exec": "/home/<youruser>/ravencoin/src/ravend"
+        "datadir": "/home/<youruser>/.bitcored",
+        "exec": "/home/<youruser>/bitcore/src/bitcored"
       }
     }
   }
 }
 ```
 
-**Note**: To install services [insight-api](https://github.com/underdarkskies/insight-api) and [insight-ui](https://github.com/underdarkskies/insight-ui) you'll need to clone the repositories locally.
+**Note**: To install services [insight-api](https://github.com/BTXexplorer/insight-api) and [insight-ui](https://github.com/BTXexplorer/insight-ui) you'll need to clone the repositories locally.
 
 Setup symlinks for all of the services and dependencies:
 
 ```bash
 cd node_modules
-ln -s ~/ravencore-lib
-ln -s ~/ravencore-node
+ln -s ~/btxcore-lib
+ln -s ~/btxcore-node
 ln -s ~/insight-api
 ln -s ~/insight-ui
 ```
 
-Make sure that the `<datadir>/raven.conf` has the necessary settings, for example:
+Make sure that the `<datadir>/btx.conf` has the necessary settings, for example:
 ```
 server=1
 whitelist=127.0.0.1
@@ -152,11 +152,11 @@ spentindex=1
 zmqpubrawtx=tcp://127.0.0.1:28332
 zmqpubhashblock=tcp://127.0.0.1:28332
 rpcallowip=127.0.0.1
-rpcuser=ravencoin
+rpcuser=bitcore
 rpcpassword=local321
 ```
 
 From within the `devnode` directory with the configuration file, start the node:
 ```bash
-../ravencore-node/bin/ravencore-node start
+../btxcore-node/bin/btxcore-node start
 ```

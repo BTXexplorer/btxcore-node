@@ -1,15 +1,15 @@
-Ravencore'use strict';
+'use strict';
 
 var benchmark = require('benchmark');
-var ravencoin = require('ravencoin');
+var bitcore = require('bitcore');
 var async = require('async');
 var maxTime = 20;
 
-console.log('Ravencoin Service native interface vs. Ravencoin JSON RPC interface');
+console.log('bitcore Service native interface vs. bitcore JSON RPC interface');
 console.log('----------------------------------------------------------------------');
 
-// To run the benchmarks a fully synced Ravencoin directory is needed. The RPC comands
-// can be modified to match the settings in raven.conf.
+// To run the benchmarks a fully synced bitcore directory is needed. The RPC comands
+// can be modified to match the settings in btx.conf.
 
 var fixtureData = {
   blockHashes: [
@@ -26,34 +26,34 @@ var fixtureData = {
   ]
 };
 
-var ravend = require('../').services.Ravencoin({
+var bitcored = require('../').services.bitcore({
   node: {
-    datadir: process.env.HOME + '/.raven',
+    datadir: process.env.HOME + '/.btx',
     network: {
       name: 'testnet'
     }
   }
 });
 
-ravend.on('error', function(err) {
+bitcored.on('error', function(err) {
   console.error(err.message);
 });
 
-ravend.start(function(err) {
+bitcored.start(function(err) {
   if (err) {
     throw err;
   }
-  console.log('Ravencoin started');
+  console.log('bitcore started');
 });
 
-ravend.on('ready', function() {
+bitcored.on('ready', function() {
 
-  console.log('Ravencoin ready');
+  console.log('bitcore ready');
 
-  var client = new ravencoin.Client({
+  var client = new bitcore.Client({
     host: 'localhost',
     port: 18332,
-    user: 'raven',
+    user: 'btx',
     pass: 'local321'
   });
 
@@ -64,12 +64,12 @@ ravend.on('ready', function() {
       var hashesLength = fixtureData.blockHashes.length;
       var txLength = fixtureData.txHashes.length;
 
-      function ravendGetBlockNative(deffered) {
+      function bitcoredGetBlockNative(deffered) {
         if (c >= hashesLength) {
           c = 0;
         }
         var hash = fixtureData.blockHashes[c];
-        ravend.getBlock(hash, function(err, block) {
+        bitcored.getBlock(hash, function(err, block) {
           if (err) {
             throw err;
           }
@@ -78,7 +78,7 @@ ravend.on('ready', function() {
         c++;
       }
 
-      function ravendGetBlockJsonRpc(deffered) {
+      function bitcoredGetBlockJsonRpc(deffered) {
         if (c >= hashesLength) {
           c = 0;
         }
@@ -92,12 +92,12 @@ ravend.on('ready', function() {
         c++;
       }
 
-      function ravenGetTransactionNative(deffered) {
+      function btxGetTransactionNative(deffered) {
         if (c >= txLength) {
           c = 0;
         }
         var hash = fixtureData.txHashes[c];
-        ravend.getTransaction(hash, true, function(err, tx) {
+        bitcored.getTransaction(hash, true, function(err, tx) {
           if (err) {
             throw err;
           }
@@ -106,7 +106,7 @@ ravend.on('ready', function() {
         c++;
       }
 
-      function ravenGetTransactionJsonRpc(deffered) {
+      function btxGetTransactionJsonRpc(deffered) {
         if (c >= txLength) {
           c = 0;
         }
@@ -122,22 +122,22 @@ ravend.on('ready', function() {
 
       var suite = new benchmark.Suite();
 
-      suite.add('ravend getblock (native)', ravendGetBlockNative, {
+      suite.add('bitcored getblock (native)', bitcoredGetBlockNative, {
         defer: true,
         maxTime: maxTime
       });
 
-      suite.add('ravend getblock (json rpc)', ravendGetBlockJsonRpc, {
+      suite.add('bitcored getblock (json rpc)', bitcoredGetBlockJsonRpc, {
         defer: true,
         maxTime: maxTime
       });
 
-      suite.add('ravend gettransaction (native)', ravenGetTransactionNative, {
+      suite.add('bitcored gettransaction (native)', btxGetTransactionNative, {
         defer: true,
         maxTime: maxTime
       });
 
-      suite.add('ravend gettransaction (json rpc)', ravenGetTransactionJsonRpc, {
+      suite.add('bitcored gettransaction (json rpc)', btxGetTransactionJsonRpc, {
         defer: true,
         maxTime: maxTime
       });
@@ -158,7 +158,7 @@ ravend.on('ready', function() {
       throw err;
     }
     console.log('Finished');
-    ravend.stop(function(err) {
+    bitcored.stop(function(err) {
       if (err) {
         console.error('Fail to stop services: ' + err);
         process.exit(1);

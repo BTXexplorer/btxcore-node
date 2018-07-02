@@ -1,21 +1,21 @@
 {
-  "name": "ravencore-node",
-  "description": "Full node with extended capabilities using ravencore and Ravencoin",
+  "name": "btxcore-node",
+  "description": "Full node with extended capabilities using btxcore and bitcore",
   "author": "Under",
   "version": "1.0.3",
   "main": "./index.js",
-  "repository": "git://github.com/underdarkskies/ravencore-node.git",
-  "homepage": "https://github.com/underdarkskies/ravencore-node",
+  "repository": "git://github.com/BTXexplorer/btxcore-node.git",
+  "homepage": "https://github.com/BTXexplorer/btxcore-node",
   "bugs": {
-    "url": "https://github.com/underdarkskies/ravencore-node/issues"
+    "url": "https://github.com/BTXexplorer/btxcore-node/issues"
   },
   "bin": {
-    "ravencore-node": "./bin/ravencore-node",
-    "ravend": "./bin/ravend"
+    "btxcore-node": "./bin/btxcore-node",
+    "bitcored": "./bin/bitcored"
   },
   "scripts": {
     "preinstall": "./scripts/download",
-    "verify": "./scripts/download --skip-ravencoin-download --verify-ravencoin-download",
+    "verify": "./scripts/download --skip-bitcore-download --verify-bitcore-download",
     "test": "mocha -R spec --recursive",
     "regtest": "./scripts/regtest",
     "jshint": "jshint --reporter=node_modules/jshint-stylish ./lib",
@@ -23,13 +23,13 @@
     "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- --recursive -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "tags": [
-    "ravencoin",
-    "ravennd"
+    "bitcore",
+    "btxnd"
   ],
   "dependencies": {
     "async": "^2.5.0",
-    "ravend-rpc": "underdarkskies/ravend-rpc",
-    "ravencore-lib": "underdarkskies/ravencore-lib",
+    "bitcored-rpc": "BTXexplorer/bitcored-rpc",
+    "btxcore-lib": "BTXexplorer/btxcore-lib",
     "body-parser": "^1.18.3",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "benchmark": "1.0.0",
-    "ravencore-p2p": "underdarkskies/ravencore-p2p",
+    "btxcore-p2p": "BTXexplorer/btxcore-p2p",
     "chai": "^4.1.2",
     "coveralls": "^3.0.1",
     "istanbul": "^0.4.3",

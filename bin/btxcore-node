@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var btxcore = require('../lib/cli/btxcore');
+btxcore();
