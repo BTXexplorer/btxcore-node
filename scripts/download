@@ -5,9 +5,9 @@ set -e
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 platform=`uname -a | awk '{print tolower($1)}'`
 arch=`uname -m`
-version="0.15.2"
-url="https://github.com/BTXexplorer/bitcore-extended/releases/download"
-tag="v0.15.2"
+version="0.15.1"
+url="https://github.com/BTXexplorer/BitCore/releases/download"
+tag="v0.15.1"
 
 if [ "${platform}" == "linux" ]; then
     if [ "${arch}" == "x86_64" ]; then
